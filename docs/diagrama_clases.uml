@@ -1,0 +1,58 @@
+@startuml
+class Producto {
+- codigo: Integer
+- descripcion: String
+- precioUnitario: BigDecimal
+- ivaAplicable: BigDecimal
+- pvp: BigDecimal
+- stock: Integer
+
++ guardar(producto:Producto):void
++ eliminar(producto:Producto):void  
++ modificar(producto:Producto):Producto
++ importar(producto:Producto):void
++ exportar(producto:Producto):void
++ buscar(descripcion:String):Producto
+}
+
+class Ticket {
+- codigo: String
++ importar(ticket:Ticket):void
++ exportar(ticket:Ticket):void  
+}
+
+class LineaTicket {
+- cantidad: Integer
+- importeTotal: BigDecimal
+}
+
+class Cliente {
+- codigo: String
+- nif: String
+- razonSocial: String
+- domicilio: String
+- fechaAlta: Date
+
++ guardar(cliente: Cliente): void
++ eliminar(cliente: Cliente): void
++ modificar(cliente: Cliente): Cliente
++ importar(cliente: Cliente): void
++ exportar(cliente: Cliente): void
+}
+
+class Factura {
+- numeroFactura: String
+- cifVendedor: String
+- razonSocialVendedor: String
+- fechaEmision: Date
+- importeTotal: BigDecimal
+
+}
+
+Ticket "1" --> "*" LineaTicket : productosVendidos
+Cliente "1" --> "*" Ticket
+LineaTicket "*" --> "1" Producto
+Factura "*" --> "1" Cliente
+Ticket "*" --> "1" Factura
+@enduml
+
