@@ -22,7 +22,7 @@ class Ticket {
 }
 
 class LineaTicket {
-- cantidad: Integer
+- unidadesVendidas: Integer
 - importeTotal: BigDecimal
 }
 
