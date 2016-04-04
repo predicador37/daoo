@@ -1,6 +1,8 @@
 package es.uned.mexposito37.daoo.model;
 import java.io.FileReader;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.supercsv.cellprocessor.ParseBigDecimal;
 import org.supercsv.cellprocessor.ParseInt;
@@ -104,24 +106,27 @@ public class Producto {
             return processors;
     }
     
-    public static void importar() throws Exception {
+    public static List<Producto> importar() throws Exception {
     	ICsvBeanReader beanReader = null;
+    	List<Producto> productos = new ArrayList();
     	try {
     		beanReader = new CsvBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
     		final String[] header = beanReader.getHeader(true);
             final CellProcessor[] processors = getProcessors();
             Producto producto;
             while( (producto = beanReader.read(Producto.class, header, processors)) != null ) {
-                System.out.println(String.format("lineNo=%s, rowNo=%s, producto=%s", beanReader.getLineNumber(),
-                        beanReader.getRowNumber(), producto));
+                productos.add(producto);
+            	
         }
         
 }
 finally {
         if( beanReader != null ) {
                 beanReader.close();
+                
         }
+        
 }
-    	
+    	return productos;
     }
 }
