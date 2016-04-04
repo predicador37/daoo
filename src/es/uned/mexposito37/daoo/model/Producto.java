@@ -1,5 +1,6 @@
 package es.uned.mexposito37.daoo.model;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +8,12 @@ import java.util.List;
 import org.supercsv.cellprocessor.ParseBigDecimal;
 import org.supercsv.cellprocessor.ParseInt;
 import org.supercsv.cellprocessor.constraint.NotNull;
-import org.supercsv.cellprocessor.constraint.StrRegEx;
 import org.supercsv.cellprocessor.constraint.UniqueHashCode;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
+import org.supercsv.io.CsvBeanWriter;
 import org.supercsv.io.ICsvBeanReader;
+import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
 public class Producto {
@@ -92,11 +94,11 @@ public class Producto {
      * 
      * @return the cell processors
      */
-    private static CellProcessor[] getProcessors() {
+    private static CellProcessor[] getReadProcessors() {
             
-            final CellProcessor[] processors = new CellProcessor[] { 
-                    new UniqueHashCode(), // código de producto
-                    new NotNull(), // descripción
+            final CellProcessor[] processors = new CellProcessor[] {
+            		new UniqueHashCode(), // código de producto
+            		new NotNull(), // descripción
                     new ParseBigDecimal(), // precio sin iva
                     new ParseInt(), // iva
                     new ParseBigDecimal(), // pvp
@@ -106,13 +108,28 @@ public class Producto {
             return processors;
     }
     
+    private static CellProcessor[] getWriteProcessors() {
+        
+        final CellProcessor[] processors = new CellProcessor[] { 
+                new UniqueHashCode(), // código de producto
+                new NotNull(), // descripción
+                new NotNull(), // precio sin iva
+                new NotNull(), // iva
+                new NotNull(), // pvp
+                new NotNull() // stock
+                
+        };
+        
+        return processors;
+}
+    
     public static List<Producto> importar() throws Exception {
     	ICsvBeanReader beanReader = null;
-    	List<Producto> productos = new ArrayList();
+    	List<Producto> productos = new ArrayList<Producto>();
     	try {
     		beanReader = new CsvBeanReader(new FileReader(CSV_FILENAME), CsvPreference.STANDARD_PREFERENCE);
     		final String[] header = beanReader.getHeader(true);
-            final CellProcessor[] processors = getProcessors();
+            final CellProcessor[] processors = getReadProcessors();
             Producto producto;
             while( (producto = beanReader.read(Producto.class, header, processors)) != null ) {
                 productos.add(producto);
@@ -129,4 +146,36 @@ finally {
 }
     	return productos;
     }
+    
+public static void exportar(List<Producto> productos) throws Exception {
+        
+       
+        
+        ICsvBeanWriter beanWriter = null;
+        try {
+                beanWriter = new CsvBeanWriter(new FileWriter(CSV_FILENAME),
+                        CsvPreference.STANDARD_PREFERENCE);
+                
+                // the header elements are used to map the bean values to each column (names must match)
+                final String[] header = new String[] { "codigo", "descripcion", "precio", "iva",
+                        "pvp", "stock"};
+                final CellProcessor[] processors = getWriteProcessors();
+                
+                // write the header
+                beanWriter.writeHeader(header);
+                
+                // write the beans
+                for( final Producto producto : productos ) {
+        
+                	   
+                        beanWriter.write(producto, header, processors);
+                }
+                
+        }
+        finally {
+                if( beanWriter != null ) {
+                        beanWriter.close();
+                }
+        }
+}
 }

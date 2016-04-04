@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Test;
 
 import es.uned.mexposito37.daoo.model.Producto;
@@ -22,5 +23,37 @@ public class ProductoTest {
 			e.printStackTrace();
 		}
 	}
+	
+	@Test
+	public void testProductCSVExport() {
+		List<Producto> productos = null;
+		
+		try {
+			productos = Producto.importar();
+
+			Producto nuevoProducto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
+		
+			productos.add(nuevoProducto);
+			Producto.exportar(productos);
+			
+			List<Producto> nuevosProductos = Producto.importar();
+			assertEquals("El número de productos debe ser 3",3,nuevosProductos.size());
+			assertTrue("La descripción del último producto es Vernee Thor", nuevosProductos.get(nuevosProductos.size()-1).getDescripcion().equals("Vernee Thor"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			productos.remove(productos.size()-1);
+			try {
+				Producto.exportar(productos);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 
 }
