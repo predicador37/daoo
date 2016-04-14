@@ -178,4 +178,27 @@ public static void exportar(List<Producto> productos) throws Exception {
                 }
         }
 }
+
+public static void append(Producto producto) throws Exception {
+	 ICsvBeanWriter beanWriter = null;
+     try {
+             beanWriter = new CsvBeanWriter(new FileWriter(CSV_FILENAME, true),
+                     CsvPreference.STANDARD_PREFERENCE);
+             
+             // the header elements are used to map the bean values to each column (names must match)
+             final String[] header = new String[] { "codigo", "descripcion", "precio", "iva",
+                     "pvp", "stock"};
+             final CellProcessor[] processors = getWriteProcessors();
+                      
+             	   
+                     beanWriter.write(producto, header, processors);
+          
+             
+     }
+     finally {
+             if( beanWriter != null ) {
+                     beanWriter.close();
+             }
+     }
+}
 }

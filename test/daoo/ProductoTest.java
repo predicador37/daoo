@@ -54,6 +54,31 @@ public class ProductoTest {
 		}
 	}
 	
+	@Test
+	public void testProductAdd() {
+		Producto producto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
+		List<Producto>  productos = null;
+		try {
+			Producto.append(producto);
+			productos = Producto.importar();
+			assertEquals("El número de productos debe ser 3",3,productos.size());
+			assertTrue("La descripción del último producto es Vernee Thor", productos.get(productos.size()-1).getDescripcion().equals("Vernee Thor"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			productos.remove(productos.size()-1);
+			try {
+				Producto.exportar(productos);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
 	
 
 }
