@@ -2,6 +2,8 @@ package es.uned.mexposito37.daoo.gui;
 
 import java.awt.EventQueue;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JToolBar;
@@ -17,8 +19,14 @@ import org.jdesktop.swingbinding.SwingBindings;
 import org.jdesktop.beansbinding.AutoBinding.UpdateStrategy;
 import org.jdesktop.beansbinding.BeanProperty;
 import java.math.BigDecimal;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class ApplicationWindow {
+public class ApplicationWindow implements Observer{
 
 	private JFrame frame;
 	private JScrollPane scrollPane;
@@ -41,6 +49,20 @@ public class ApplicationWindow {
 			}
 		});
 	}
+	
+	@Override // Observer interface's implemented method
+    public void update(Observable o, Object data) {
+		System.out.println("Observado cambio");
+		ProductoController productoController = new ProductoController();
+	
+		try {
+			productos = productoController.importar();
+			initDataBindings();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Create the application.
@@ -61,17 +83,35 @@ public class ApplicationWindow {
 			e.printStackTrace();
 		}
 		frame = new JFrame();
-		frame.setBounds(100, 100, 1240, 595);
+		
+		frame.setBounds(100, 100, 1240, 588);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
 		
 		JToolBar toolBar = new JToolBar();
-		frame.getContentPane().add(toolBar, BorderLayout.NORTH);
+		toolBar.setBounds(0, 0, 1238, 19);
+		frame.getContentPane().add(toolBar);
 		
 		scrollPane = new JScrollPane();
-		frame.getContentPane().add(scrollPane, BorderLayout.CENTER);
+		scrollPane.setBounds(25, 31, 1181, 186);
+		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
+		table.setShowVerticalLines(true);
+		table.setShowHorizontalLines(true);
 		scrollPane.setViewportView(table);
+		
+		JButton btnNewButton = new JButton("Añadir");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ProductoController productoController = new ProductoController();
+				Producto nuevoProducto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
+				nuevoProducto.addObserver(this);
+				productoController.crear(nuevoProducto);
+			}
+		});
+		btnNewButton.setBounds(35, 229, 117, 25);
+		frame.getContentPane().add(btnNewButton);
 		initDataBindings();
 	}
 	protected void initDataBindings() {

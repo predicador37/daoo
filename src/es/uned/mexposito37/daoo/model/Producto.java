@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import org.supercsv.cellprocessor.ParseBigDecimal;
 import org.supercsv.cellprocessor.ParseInt;
@@ -16,7 +17,7 @@ import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
-public class Producto {
+public class Producto extends Observable {
 	
 	final static String CSV_FILENAME="./data/productos.csv";
 
@@ -179,7 +180,7 @@ public static void exportar(List<Producto> productos) throws Exception {
         }
 }
 
-public static void append(Producto producto) throws Exception {
+public void append() throws Exception {
 	 ICsvBeanWriter beanWriter = null;
      try {
              beanWriter = new CsvBeanWriter(new FileWriter(CSV_FILENAME, true),
@@ -191,13 +192,16 @@ public static void append(Producto producto) throws Exception {
              final CellProcessor[] processors = getWriteProcessors();
                       
              	   
-                     beanWriter.write(producto, header, processors);
+                     beanWriter.write(this, header, processors);
           
              
      }
      finally {
              if( beanWriter != null ) {
-                     beanWriter.close();
+            	 System.out.println("Notificando observadores");
+            	 setChanged();
+            	 notifyObservers();
+                 beanWriter.close();
              }
      }
 }

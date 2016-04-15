@@ -59,7 +59,7 @@ public class ProductoTest {
 		Producto producto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
 		List<Producto>  productos = null;
 		try {
-			Producto.append(producto);
+			producto.append();
 			productos = Producto.importar();
 			assertEquals("El número de productos debe ser 3",3,productos.size());
 			assertTrue("La descripción del último producto es Vernee Thor", productos.get(productos.size()-1).getDescripcion().equals("Vernee Thor"));

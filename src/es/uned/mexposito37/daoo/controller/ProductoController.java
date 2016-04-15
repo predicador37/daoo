@@ -11,7 +11,13 @@ public class ProductoController {
 	}
 
 	public void crear(Producto producto) {
-		
+		try {
+			producto.append();
+			System.out.println("nuevo producto appended");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 	
 	public List<Producto>importar(){
