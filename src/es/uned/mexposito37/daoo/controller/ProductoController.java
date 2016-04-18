@@ -2,7 +2,7 @@ package es.uned.mexposito37.daoo.controller;
 
 import java.util.List;
 
-import es.uned.mexposito37.daoo.model.Producto;
+import es.uned.mexposito37.daoo.model.producto.Producto;
 
 public class ProductoController {
 	
@@ -32,10 +32,10 @@ public class ProductoController {
 		return productos;
 	}
 	
-	public List<Producto>importar(){
+	public List<Producto>importar(Class clase){
 		List<Producto> productos = null;
 		try {
-			productos=Producto.importar();
+			productos=Producto.importar(clase);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

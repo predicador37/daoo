@@ -9,7 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JToolBar;
 
 import es.uned.mexposito37.daoo.controller.ProductoController;
-import es.uned.mexposito37.daoo.model.Producto;
+import es.uned.mexposito37.daoo.model.producto.Movil;
+import es.uned.mexposito37.daoo.model.producto.MovilSamsung;
+import es.uned.mexposito37.daoo.model.producto.Producto;
 
 import java.awt.BorderLayout;
 import javax.swing.JTable;
@@ -76,9 +78,9 @@ public class ApplicationWindow {
 	private void initialize() {
 		
 		ProductoController productoController = new ProductoController();
-		producto = new Producto("123456", "Prueba", new BigDecimal(550.0), 21, 3);
+		producto = new MovilSamsung("123456", "Prueba", new BigDecimal(550.0), 21, 3);
 		try {
-			productos = productoController.importar();
+			productos = productoController.importar(Movil.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -106,7 +108,7 @@ public class ApplicationWindow {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//initDataBindings();
-				Producto nuevoProducto = new Producto();
+				Producto nuevoProducto = new MovilSamsung();
 				nuevoProducto.setCodigo(txtCdigo.getText());
 				nuevoProducto.setDescripcion(txtDescripcin.getText());
 				nuevoProducto.setIva((Integer) spinner.getValue());

@@ -2,6 +2,8 @@ package es.uned.mexposito37.daoo.model;
 
 import java.math.BigDecimal;
 
+import es.uned.mexposito37.daoo.model.producto.Producto;
+
 public class LineaTicket {
 	
 	private Integer unidadesVendidas;

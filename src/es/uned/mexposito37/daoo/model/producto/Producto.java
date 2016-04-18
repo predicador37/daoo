@@ -1,4 +1,4 @@
-package es.uned.mexposito37.daoo.model;
+package es.uned.mexposito37.daoo.model.producto;
 import java.beans.PropertyChangeSupport;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -18,7 +18,7 @@ import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
-public class Producto {
+public abstract class Producto  {
 	
 	final static String CSV_FILENAME="./data/productos.csv";
 
@@ -101,7 +101,7 @@ public class Producto {
      * 
      * @return the cell processors
      */
-    private static CellProcessor[] getReadProcessors() {
+    public static CellProcessor[] getReadProcessors() {
             
             final CellProcessor[] processors = new CellProcessor[] {
             		new UniqueHashCode(), // código de producto
@@ -115,7 +115,7 @@ public class Producto {
             return processors;
     }
     
-    private static CellProcessor[] getWriteProcessors() {
+    public static CellProcessor[] getWriteProcessors() {
         
         final CellProcessor[] processors = new CellProcessor[] { 
                 new UniqueHashCode(), // código de producto
@@ -130,7 +130,8 @@ public class Producto {
         return processors;
 }
     
-    public static List<Producto> importar() throws Exception {
+    public static List<Producto> importar(Class clase) throws Exception {
+    	
     	ICsvBeanReader beanReader = null;
     	List<Producto> productos = new ArrayList<Producto>();
     	try {
@@ -138,7 +139,7 @@ public class Producto {
     		final String[] header = beanReader.getHeader(true);
             final CellProcessor[] processors = getReadProcessors();
             Producto producto;
-            while( (producto = beanReader.read(Producto.class, header, processors)) != null ) {
+            while( (producto = beanReader.read(clase, header, processors)) != null ) {
                 productos.add(producto);
             	
         }
