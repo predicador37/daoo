@@ -1,0 +1,54 @@
+@startuml
+
+abstract class FabricaAbstracta {
++crearProductoA(): ProductoA
++crearProductoB(): ProductoB
+}
+
+abstract class ProductoA{
+
+}
+
+abstract class ProductoB{
+
+}
+
+class FabricaConcretaX {
++crearProductoA(): ProductoA
++crearProductoB(): ProductoB
+}
+
+class FabricaConcretaY {
++crearProductoA(): ProductoA
++crearProductoB(): ProductoB
+}
+
+class ProductoAX {
+}
+
+class ProductoAY {
+}
+
+class ProductoBX {
+}
+
+class ProductoBY {
+}
+
+FabricaConcretaX -up-|> FabricaAbstracta
+FabricaConcretaY -up-|> FabricaAbstracta
+FabricaConcretaX ..> ProductoAX : crea
+FabricaConcretaY ..> ProductoAY : crea
+FabricaConcretaX ..> ProductoBX : crea
+FabricaConcretaY ..> ProductoBY : crea
+ProductoAX --|> ProductoA
+ProductoBX --|> ProductoB
+ProductoAY --|> ProductoA
+ProductoBY --|> ProductoB
+Cliente ..> FabricaAbstracta : usa
+Cliente ..> ProductoA : usa
+Cliente ..> ProductoB : usa
+
+
+@enduml
+

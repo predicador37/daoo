@@ -1,0 +1,59 @@
+@startuml
+
+abstract class FabricaAbstracta {
++crearMovil(): Movil
++crearTablet(): Tablet
+}
+
+abstract class Movil{
+
+}
+
+abstract class Tablet{
+
+}
+
+abstract class Producto {
+
+}
+
+class FabricaSamsung {
++crearMovil(): Movil
++crearTablet(): Tablet
+}
+
+class FabricaLG {
++crearMovil(): Movil
++crearTablet(): Tablet
+}
+
+class MovilSamsung {
+}
+
+class MovilLG {
+}
+
+class TabletSamsung {
+}
+
+class TabletLG {
+}
+
+FabricaSamsung -up-|> FabricaAbstracta
+FabricaLG -up-|> FabricaAbstracta
+FabricaSamsung ..> MovilSamsung : crea
+FabricaLG ..> TabletSamsung : crea
+FabricaSamsung ..> MovilLG : crea
+FabricaLG ..> TabletLG : crea
+MovilSamsung --|> Movil
+TabletSamsung --|> Tablet
+MovilLG --|> Movil
+TabletLG --|> Tablet
+ClienteGadgets ..> FabricaAbstracta : usa
+ClienteGadgets ..> Movil : usa
+ClienteGadgets ..> Tablet : usa
+Movil --|> Producto
+Tablet --|> Producto
+
+@enduml
+
