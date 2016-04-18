@@ -25,13 +25,24 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JTextField;
+import org.jdesktop.beansbinding.ObjectProperty;
+import org.jdesktop.beansbinding.AutoBinding;
+import org.jdesktop.beansbinding.Bindings;
+import org.jdesktop.beansbinding.Converter;
 
-public class ApplicationWindow implements Observer{
+import javax.swing.JSpinner;
+
+public class ApplicationWindow {
 
 	private JFrame frame;
 	private JScrollPane scrollPane;
 	private JTable table;
 	private List<Producto> productos;
+	private Producto producto;
+	private JTextField txtCdigo;
+	private JTextField txtDescripcin;
+	private JSpinner spinner;
 
 	/**
 	 * Launch the application.
@@ -50,19 +61,7 @@ public class ApplicationWindow implements Observer{
 		});
 	}
 	
-	@Override // Observer interface's implemented method
-    public void update(Observable o, Object data) {
-		System.out.println("Observado cambio");
-		ProductoController productoController = new ProductoController();
 	
-		try {
-			productos = productoController.importar();
-			initDataBindings();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Create the application.
@@ -75,7 +74,9 @@ public class ApplicationWindow implements Observer{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		ProductoController productoController = new ProductoController();
+		producto = new Producto("123456", "Prueba", new BigDecimal(550.0), 21, 3);
 		try {
 			productos = productoController.importar();
 		} catch (Exception e) {
@@ -104,14 +105,39 @@ public class ApplicationWindow implements Observer{
 		JButton btnNewButton = new JButton("Añadir");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				//initDataBindings();
+				Producto nuevoProducto = new Producto();
+				nuevoProducto.setCodigo(txtCdigo.getText());
+				nuevoProducto.setDescripcion(txtDescripcin.getText());
+				nuevoProducto.setIva((Integer) spinner.getValue());
+				System.out.println(nuevoProducto.getDescripcion());
 				ProductoController productoController = new ProductoController();
-				Producto nuevoProducto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
-				nuevoProducto.addObserver(this);
-				productoController.crear(nuevoProducto);
+				//Producto nuevoProducto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
+				
+				productoController.add(nuevoProducto, productos);
+				//table.revalidate();
+				//table.repaint();
+				initDataBindings();
 			}
 		});
 		btnNewButton.setBounds(35, 229, 117, 25);
 		frame.getContentPane().add(btnNewButton);
+		
+		txtCdigo = new JTextField();
+		txtCdigo.setText("Código");
+		txtCdigo.setBounds(38, 280, 114, 19);
+		frame.getContentPane().add(txtCdigo);
+		txtCdigo.setColumns(10);
+		
+		txtDescripcin = new JTextField();
+		txtDescripcin.setText("Descripción");
+		txtDescripcin.setBounds(38, 311, 114, 19);
+		frame.getContentPane().add(txtDescripcin);
+		txtDescripcin.setColumns(10);
+		
+		spinner = new JSpinner();
+		spinner.setBounds(35, 342, 104, 19);
+		frame.getContentPane().add(spinner);
 		initDataBindings();
 	}
 	protected void initDataBindings() {
@@ -136,5 +162,20 @@ public class ApplicationWindow implements Observer{
 		jTableBinding.addColumnBinding(productoBeanProperty_5).setColumnName("Stock");
 		//
 		jTableBinding.bind();
+		//
+		BeanProperty<Producto, String> productoBeanProperty_6 = BeanProperty.create("codigo");
+		BeanProperty<JTextField, String> jTextFieldBeanProperty = BeanProperty.create("text");
+		AutoBinding<Producto, String, JTextField, String> autoBinding = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, producto, productoBeanProperty_6, txtCdigo, jTextFieldBeanProperty);
+		autoBinding.bind();
+		//
+		BeanProperty<Producto, String> productoBeanProperty_7 = BeanProperty.create("descripcion");
+		BeanProperty<JTextField, String> jTextFieldBeanProperty_1 = BeanProperty.create("text");
+		AutoBinding<Producto, String, JTextField, String> autoBinding_1 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, producto, productoBeanProperty_7, txtDescripcin, jTextFieldBeanProperty_1, "descripcion");
+		autoBinding_1.bind();
+		//
+		BeanProperty<Producto, Integer> productoBeanProperty_8 = BeanProperty.create("iva");
+		BeanProperty<JSpinner, Object> jSpinnerBeanProperty = BeanProperty.create("value");
+		AutoBinding<Producto, Integer, JSpinner, Object> autoBinding_2 = Bindings.createAutoBinding(UpdateStrategy.READ_WRITE, producto, productoBeanProperty_8, spinner, jSpinnerBeanProperty);
+		autoBinding_2.bind();
 	}
 }

@@ -20,6 +20,18 @@ public class ProductoController {
 		}
 	}
 	
+	public List<Producto> add(Producto producto, List<Producto> productos){
+		for(Producto p : productos){
+			if(p.getCodigo() !=null && p.getCodigo().contains(producto.getCodigo())){
+				System.out.println("[error] El producto ya existe en la lista.");
+				return productos;
+			}
+			
+			}
+		productos.add(producto);
+		return productos;
+	}
+	
 	public List<Producto>importar(){
 		List<Producto> productos = null;
 		try {

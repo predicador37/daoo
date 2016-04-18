@@ -1,4 +1,5 @@
 package es.uned.mexposito37.daoo.model;
+import java.beans.PropertyChangeSupport;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.math.BigDecimal;
@@ -17,7 +18,7 @@ import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
-public class Producto extends Observable {
+public class Producto {
 	
 	final static String CSV_FILENAME="./data/productos.csv";
 
@@ -32,12 +33,12 @@ public class Producto extends Observable {
     	
     }
 
-    public Producto(String codigo, String descripcion, BigDecimal precio, Integer iva, BigDecimal pvp, Integer stock) {
+    public Producto(String codigo, String descripcion, BigDecimal precio, Integer iva,  Integer stock) {
         this.codigo = codigo;
         this.descripcion = descripcion;
         this.precio = precio;
         this.iva = iva;
-        this.pvp = pvp;
+        this.pvp = precio.multiply( new BigDecimal(iva));
         this.stock = stock;
     }
 
@@ -87,6 +88,11 @@ public class Producto extends Observable {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+    
+    public String toString() {
+    	
+    	return this.getCodigo() + " - " + this.getDescripcion();
     }
     
     /**
@@ -198,9 +204,6 @@ public void append() throws Exception {
      }
      finally {
              if( beanWriter != null ) {
-            	 System.out.println("Notificando observadores");
-            	 setChanged();
-            	 notifyObservers();
                  beanWriter.close();
              }
      }

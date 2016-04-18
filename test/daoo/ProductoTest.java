@@ -31,7 +31,7 @@ public class ProductoTest {
 		try {
 			productos = Producto.importar();
 
-			Producto nuevoProducto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
+			Producto nuevoProducto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, 5);
 		
 			productos.add(nuevoProducto);
 			Producto.exportar(productos);
@@ -56,7 +56,7 @@ public class ProductoTest {
 	
 	@Test
 	public void testProductAdd() {
-		Producto producto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
+		Producto producto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, 5);
 		List<Producto>  productos = null;
 		try {
 			producto.append();
