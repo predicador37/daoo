@@ -1,0 +1,30 @@
+@startuml
+
+abstract class Componente {
++operacion()
+}
+
+class ComponenteConcreto {
++operacion()
+}
+
+abstract class Decorador {
++operacion()
+}
+
+class DecoradorConcretoA {
++operacion()
+-estadoAdicional
+}
+
+class DecoradorConcretoB {
++operacion()
++comportamientoAdicional()
+}
+Decorador o-right- Componente
+Decorador -up-|> Componente
+ComponenteConcreto -up-|> Componente
+DecoradorConcretoA -up-|> Decorador
+DecoradorConcretoB -up-|> Decorador
+@enduml
+

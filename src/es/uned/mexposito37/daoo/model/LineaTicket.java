@@ -11,13 +11,16 @@ public class LineaTicket {
 	Producto producto;
 	Ticket ticket;
 	
-	
-	public LineaTicket(Integer unidadesVendidas, BigDecimal importeTotal, Producto producto, Ticket ticket) {
+	public LineaTicket() {
+		
+	}
+	public LineaTicket(Integer unidadesVendidas, Producto producto, Ticket ticket) {
 		super();
 		this.unidadesVendidas = unidadesVendidas;
-		this.importeTotal = importeTotal;
+		this.importeTotal =  producto.getPvp().multiply(new BigDecimal(unidadesVendidas));
 		this.producto = producto;
 		this.ticket = ticket;
+		this.ticket.addToLineasTicket(this);
 	}
 	
 	public Integer getUnidadesVendidas() {

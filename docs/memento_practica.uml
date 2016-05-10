@@ -1,0 +1,20 @@
+@startuml
+class Originador {
++establecerMemento(Memento m): void
++crearMemento(): Object
+}
+
+class Memento {
+-estado
++obtenerEstado(): Estado
++establecerEstado(Estado e)
+}
+
+class Conserje {
+
+}
+
+Conserje o-left-> Memento
+Originador ..> Memento : crea
+
+@enduml

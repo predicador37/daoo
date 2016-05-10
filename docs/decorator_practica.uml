@@ -1,0 +1,30 @@
+@startuml
+
+abstract class Factura {
++toString()
+}
+
+class FacturaGenerica {
++toString()
+}
+
+abstract class DecoradorFactura {
++toString()
+}
+
+class DecoradorFacturaClienteVip {
++toString()
+-customization
+}
+
+class DecoradorFacturaClienteNoFidelizado {
++toString()
+-customization
+}
+DecoradorFactura o-right- Factura 
+DecoradorFactura -up-|> Factura
+FacturaGenerica -up-|> Factura
+DecoradorFacturaClienteVip -up-|> DecoradorFactura
+DecoradorFacturaClienteNoFidelizado -up-|> DecoradorFactura
+@enduml
+

@@ -38,7 +38,7 @@ public abstract class Producto  {
         this.descripcion = descripcion;
         this.precio = precio;
         this.iva = iva;
-        this.pvp = precio.multiply( new BigDecimal(iva));
+        this.pvp = precio.multiply( new BigDecimal((1 + (double)iva/(double)100)));
         this.stock = stock;
     }
 

@@ -1,5 +1,6 @@
 package es.uned.mexposito37.daoo.demos;
 
+import es.uned.mexposito37.daoo.model.producto.ClienteGadgets;
 import es.uned.mexposito37.daoo.model.producto.FabricaAbstracta;
 import es.uned.mexposito37.daoo.model.producto.FabricaLG;
 import es.uned.mexposito37.daoo.model.producto.FabricaSamsung;

@@ -1,12 +1,8 @@
-package es.uned.mexposito37.daoo.demos;
-
-import es.uned.mexposito37.daoo.model.producto.FabricaAbstracta;
-import es.uned.mexposito37.daoo.model.producto.Movil;
-import es.uned.mexposito37.daoo.model.producto.Tablet;
+package es.uned.mexposito37.daoo.model.producto;
 
 public class ClienteGadgets {
 	
-	ClienteGadgets() {
+	public ClienteGadgets() {
 		
 	}
 
