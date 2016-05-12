@@ -1,3 +1,6 @@
+/*
+ * Clase ApplicationWindow: ejecutar para ver la integración con la GUI.
+ */
 package es.uned.mexposito37.daoo.gui;
 
 import java.awt.EventQueue;
@@ -35,6 +38,10 @@ import org.jdesktop.beansbinding.Converter;
 
 import javax.swing.JSpinner;
 
+
+/**
+ * Clase ApplicationWindow: ejecutar para ver la integración con la GUI.
+ */
 public class ApplicationWindow {
 
 	private JFrame frame;
@@ -47,8 +54,11 @@ public class ApplicationWindow {
 	private JSpinner spinner;
 
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación.
+	 *
+	 * @param args argumentos
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -66,15 +76,17 @@ public class ApplicationWindow {
 	
 
 	/**
-	 * Create the application.
+	 * Crea la aplicación.
 	 */
+	
 	public ApplicationWindow() {
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Inicializa los contenidos del marco.
 	 */
+	
 	private void initialize() {
 		
 		ProductoController productoController = new ProductoController();
@@ -82,7 +94,7 @@ public class ApplicationWindow {
 		try {
 			productos = productoController.importar(MovilSamsung.class);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		frame = new JFrame();
@@ -142,6 +154,9 @@ public class ApplicationWindow {
 		frame.getContentPane().add(spinner);
 		initDataBindings();
 	}
+	/**
+	 * Inicializa los vínculos de datos.
+	 */
 	protected void initDataBindings() {
 		JTableBinding<Producto, List<Producto>, JTable> jTableBinding = SwingBindings.createJTableBinding(UpdateStrategy.READ, productos, table);
 		//

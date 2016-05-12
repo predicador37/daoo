@@ -22,7 +22,7 @@ public class ProductoTest {
 			System.out.println(productos.get(0).getDescripcion());
 			assertTrue("El pvp del primer producto debe ser 200", productos.get(0).getPvp().compareTo(new BigDecimal("200"))==0);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 	}
@@ -40,7 +40,7 @@ public class ProductoTest {
 			assertEquals("El número de productos debe ser 3",3,nuevosProductos.size());
 			assertTrue("La descripción del último producto es Vernee Thor", nuevosProductos.get(nuevosProductos.size()-1).getDescripcion().equals("Vernee Thor"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		finally {
@@ -48,7 +48,7 @@ public class ProductoTest {
 			try {
 				Movil.exportar(productos);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}
@@ -64,14 +64,14 @@ public class ProductoTest {
 			assertEquals("El número de productos debe ser 3",3,productos.size());
 			assertTrue("La descripción del último producto es Vernee Thor", productos.get(productos.size()-1).getDescripcion().equals("Vernee Thor"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}finally {
 			productos.remove(productos.size()-1);
 			try {
 				Movil.exportar(productos);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

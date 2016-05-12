@@ -1,3 +1,6 @@
+/*
+ * Clase abstracta Factura que modela la entidad del mismo nombre a modo de POJO, de la que heredarán las facturas concretas.
+ */
 package es.uned.mexposito37.daoo.model.factura;
 
 import java.math.BigDecimal;
@@ -9,8 +12,10 @@ import java.util.List;
 import es.uned.mexposito37.daoo.model.Cliente;
 import es.uned.mexposito37.daoo.model.LineaTicket;
 import es.uned.mexposito37.daoo.model.Ticket;
-import es.uned.mexposito37.daoo.model.producto.Producto;
 
+/**
+ * Clase Factura que modela la entidad del mismo nombre a modo de POJO.
+ */
 public abstract class Factura {
 
 	private String numeroFactura;
@@ -21,10 +26,27 @@ public abstract class Factura {
 	private Cliente cliente;
 	private List<Ticket> tickets;
 
+	/**
+	 * Constructor vacío para uso de superCSV.
+	 */
 	public Factura() {
 
 	}
 
+	/**
+	 * Constructor con parámetros: instancia una nueva factura.
+	 *
+	 * @param numeroFactura
+	 *            numero factura
+	 * @param cifVendedor
+	 *            cif vendedor
+	 * @param razonSocialVendedor
+	 *            razon social vendedor
+	 * @param fechaEmision
+	 *            fecha emision
+	 * @param cliente
+	 *            cliente
+	 */
 	public Factura(String numeroFactura, String cifVendedor, String razonSocialVendedor, Date fechaEmision,
 			Cliente cliente) {
 		super();
@@ -34,7 +56,7 @@ public abstract class Factura {
 		this.fechaEmision = fechaEmision;
 		this.cliente = cliente;
 		this.tickets = new ArrayList();
-		this.importeTotal=new BigDecimal(0);
+		this.importeTotal = new BigDecimal(0);
 		this.cliente.addToFacturas(this);
 	}
 
@@ -90,14 +112,26 @@ public abstract class Factura {
 		return tickets;
 	}
 
+	/**
+	 * Añade ticket a la lista de tickets y los importes totales a las líneas de
+	 * tickets.
+	 *
+	 * @param ticket
+	 *            el ticket
+	 */
 	public void addToTickets(Ticket ticket) {
 		this.tickets.add(ticket);
 		for (LineaTicket lt : ticket.getLineasTicket()) {
 			this.setImporteTotal(this.importeTotal.add(lt.getImporteTotal()));
 		}
-		
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	@Override
 	public String toString() {
 
@@ -106,19 +140,18 @@ public abstract class Factura {
 		for (Ticket t : this.getTickets()) {
 			for (LineaTicket lt : t.getLineasTicket()) {
 				productos += "Producto: " + lt.getProducto().getDescripcion() + ", Ticket: " + t.getCodigo()
-						+ ", Cantidad: " + lt.getUnidadesVendidas() + ", Subtotal: " + lt.getImporteTotal().setScale(2, RoundingMode.CEILING) + "\n";
+						+ ", Cantidad: " + lt.getUnidadesVendidas() + ", Subtotal: "
+						+ lt.getImporteTotal().setScale(2, RoundingMode.CEILING) + "\n";
 			}
 		}
 
-		return  "\n----------------------------------\n" +
-				"Datos de la Factura: \n" 
-		        + "Factura no.: " + this.getNumeroFactura() + "\n" + "CIF del vendedor: " + this.getCifVendedor() + "\n"
+		return "\n----------------------------------\n" + "Datos de la Factura: \n" + "Factura no.: "
+				+ this.getNumeroFactura() + "\n" + "CIF del vendedor: " + this.getCifVendedor() + "\n"
 				+ "Razón social del vendedor: " + this.getRazonSocialVendedor() + "\n" + "Fecha de emisión :"
 				+ this.getFechaEmision() + "\n" + "Código de cliente :" + this.cliente.getCodigo() + "\n"
 				+ "NIF del cliente :" + this.cliente.getNif() + "\n" + "Razón social del cliente: "
 				+ this.cliente.getRazonSocial() + "\n" + "Domicilio del cliente: " + this.cliente.getDomicilio() + "\n"
-				+ productos + 
-				"Importe total: " + this.getImporteTotal().setScale(2, RoundingMode.CEILING);
+				+ productos + "Importe total: " + this.getImporteTotal().setScale(2, RoundingMode.CEILING);
 
 	}
 
