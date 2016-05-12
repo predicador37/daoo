@@ -13,7 +13,7 @@ public class AbstractFactoryDemo {
 	public static void main(String[] args) {
 		
 		ClienteGadgets cliente = new ClienteGadgets();
-		String marca = "Samsung";
+		String marca = "Samsung"; //o LG
 		FabricaAbstracta fabricaProducto = null;
 		
 		if (marca.equals("Samsung")){

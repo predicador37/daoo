@@ -80,7 +80,7 @@ public class ApplicationWindow {
 		ProductoController productoController = new ProductoController();
 		producto = new MovilSamsung("123456", "Prueba", new BigDecimal(550.0), 21, 3);
 		try {
-			productos = productoController.importar(Movil.class);
+			productos = productoController.importar(MovilSamsung.class);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

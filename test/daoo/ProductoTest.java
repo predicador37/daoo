@@ -18,7 +18,7 @@ public class ProductoTest {
 	public void testProductCSVImport() {
 		//fail("Not yet implemented");
 		try {
-			List<Producto> productos = Movil.importar(Movil.class);
+			List<Producto> productos = Movil.importar(MovilSamsung.class);
 			System.out.println(productos.get(0).getDescripcion());
 			assertTrue("El pvp del primer producto debe ser 200", productos.get(0).getPvp().compareTo(new BigDecimal("200"))==0);
 		} catch (Exception e) {
@@ -32,11 +32,11 @@ public class ProductoTest {
 		List<Producto> productos = null;
 		
 		try {
-			productos = Producto.importar(Movil.class);
+			productos = Producto.importar(MovilSamsung.class);
 			Producto nuevoProducto = new MovilSamsung("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, 5);
 			productos.add(nuevoProducto);
 			Movil.exportar(productos);
-			List<Producto> nuevosProductos = Producto.importar(Movil.class);
+			List<Producto> nuevosProductos = Producto.importar(MovilSamsung.class);
 			assertEquals("El número de productos debe ser 3",3,nuevosProductos.size());
 			assertTrue("La descripción del último producto es Vernee Thor", nuevosProductos.get(nuevosProductos.size()-1).getDescripcion().equals("Vernee Thor"));
 		} catch (Exception e) {
@@ -60,7 +60,7 @@ public class ProductoTest {
 		List<Producto>  productos = null;
 		try {
 			producto.append();
-			productos = Producto.importar(Movil.class);
+			productos = Producto.importar(MovilSamsung.class);
 			assertEquals("El número de productos debe ser 3",3,productos.size());
 			assertTrue("La descripción del último producto es Vernee Thor", productos.get(productos.size()-1).getDescripcion().equals("Vernee Thor"));
 		} catch (Exception e) {
