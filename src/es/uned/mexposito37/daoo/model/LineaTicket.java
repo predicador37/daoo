@@ -10,7 +10,7 @@ import es.uned.mexposito37.daoo.model.producto.Producto;
 /**
  * Clase LineaTicket.
  */
-public class LineaTicket {
+public class LineaTicket extends AbstractModelObject {
 
 	private Integer unidadesVendidas;
 	private BigDecimal importeTotal;

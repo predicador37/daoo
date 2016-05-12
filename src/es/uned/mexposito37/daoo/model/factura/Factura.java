@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import es.uned.mexposito37.daoo.model.AbstractModelObject;
 import es.uned.mexposito37.daoo.model.Cliente;
 import es.uned.mexposito37.daoo.model.LineaTicket;
 import es.uned.mexposito37.daoo.model.Ticket;
@@ -16,7 +17,7 @@ import es.uned.mexposito37.daoo.model.Ticket;
 /**
  * Clase Factura que modela la entidad del mismo nombre a modo de POJO.
  */
-public abstract class Factura {
+public abstract class Factura extends AbstractModelObject {
 
 	private String numeroFactura;
 	private String cifVendedor;

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * La clase Ticket.
  */
-public class Ticket {
+public class Ticket extends AbstractModelObject {
 
 	private String codigo; // no procede que haya dos ventas simultáneas; por
 							// sencillez, se desnormaliza la lista

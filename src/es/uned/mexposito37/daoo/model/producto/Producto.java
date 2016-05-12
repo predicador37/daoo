@@ -20,11 +20,13 @@ import org.supercsv.io.ICsvBeanReader;
 import org.supercsv.io.ICsvBeanWriter;
 import org.supercsv.prefs.CsvPreference;
 
+import es.uned.mexposito37.daoo.model.AbstractModelObject;
+
 /**
  * Clase abstracta producto: modela un producto genérico y sus operaciones
  * comunes.
  */
-public abstract class Producto {
+public abstract class Producto extends AbstractModelObject {
 
 	final static String CSV_FILENAME = "./data/productos.csv";
 

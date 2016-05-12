@@ -12,7 +12,7 @@ import es.uned.mexposito37.daoo.model.factura.Factura;
 /**
  * Clase Cliente.
  */
-public class Cliente {
+public class Cliente extends AbstractModelObject {
 
 	private String codigo;
 	private String nif;
