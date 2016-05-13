@@ -103,6 +103,10 @@ public abstract class Producto extends AbstractModelObject {
 		return pvp;
 	}
 
+	public void setPvp() {
+		this.pvp = this.precio.multiply(new BigDecimal((1 + (double) this.iva / (double) 100)));
+	}
+	
 	public void setPvp(BigDecimal pvp) {
 		this.pvp = pvp;
 	}

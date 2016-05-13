@@ -1,3 +1,8 @@
+% Práctica de Diseño de Aplicaciones Orientadas a Objetos - Junio 2016
+% Miguel Expósito Martín - mexposito37@alumno.uned.es - 626509868 - DNI 72056097H
+
+\pagebreak
+
 # Primera parte
 
 ## ¿Es útil aplicar el Modelo Vista Controlador en esta	situación? Razone la respuesta.
@@ -18,11 +23,13 @@ La aplicación TPV a desarrollar está compuesta de distintos módulos (gestión
 - Proporciona encapsulamiento de datos y funcionalidad principal de la aplicación.
 - Registra las vistas y controladores dependientes.
 - Notifica cambios en los datos a los componentes dependientes.
+
 ### Vista
 - Crea e inicializa su controlador asociado.
 - Muestra información al usuario.
 - Implementa el proceso de actualización de dicha información.
 - Recupera datos del modelo.
+
 ### Controlador
 - Acepta la entrada del usuario en forma de eventos.
 - Traduce los eventos a llamadas de servicio para el modelo o peticiones de visualización a la vista.
@@ -36,10 +43,23 @@ Este mecanismo de propagación de cambios mantiene un registro de los componente
 
 Sí es necesario implementar el patrón Observer, puesto que se trata de un mecanismo que permite propagar los cambios del modelo a las vistas en el patrón MVC.
 
+De hecho, para desarrollar la interfaz gráfica de usuario (GUI) se ha utilizado la biblioteca `Swing`. `Swing` hace uso de un caso especial del patrón Observer, a través de un Listener (`PropertyChangeListener`, incluido en la clase `AbstractModelObject.java`) que "escucha" cambios en las propiedades del modelo. De esta forma se consigue llevar a cabo el mecanismo de edición *inline* en la tabla de datos, por ejemplo.
+
+\pagebreak
 
 ## Realice un diagrama de clases inicial donde modele los distintos actores de la aplicación, lo que definiría el modelo, e identifique propiedades compartidas entre estos.
 
-![Diagrama de clases](./diagrama_clases.png)
+A continuación se muestra el diagrama de clases surgido del diseño inicial:
+
+![Diagrama de clases inicial](./diagrama_clases.png)
+
+\pagebreak
+
+Y finalmente, el diagrama de clases resultante:
+
+![Diagrama de clases resultante](./diagrama_clases_final.png)
+
+\pagebreak
 
 # Segunda parte
 
@@ -75,6 +95,7 @@ Las clases implicadas en la demostración de este patrón residen en el paquete 
 
 El resultado de ejecutar la demo muestra por consola dos productos distintos creados para una marca determinada por un parámetro de tipo texto.
  
+\pagebreak
 
 # Tercera parte
 
@@ -88,6 +109,8 @@ El patrón `decorator` permite añadir responsabilidades a objetos individuales 
 Si bien en este caso el patrón `decorator` no añadirá funcionalidad propiamente dicha, sino que tan sólo modificará la representación de las facturas, es perfectamente aplicable. Un ejemplo del primer caso sería aplicar un descuento a una factura; dicho descuento se implementaría mediante una funcionalidad añadida por un decorador.
 
 ![Diagrama genérico decorator](./decorator_generic.png)
+
+\pagebreak
 
 ![Diagrama particular decorator](./decorator_practica.png)
 
@@ -105,9 +128,11 @@ Las clases implicadas en la demostración de este patrón residen en el paquete 
 
 El resultado de ejecutar la demo genera todos los elementos necesarios para obtener dos facturas (clientes, tickets, productos, líneas de tickets) y las presenta por consola con personalizaciones distintas en función del tipo de cliente (sin fidelizar o VIP). 
 
+\pagebreak
+
 # Cuarta parte
 
-## ?Resulta adecuado aplicar Memento para modelar el estado de la lista? Razone su respuesta.
+## ¿Resulta adecuado aplicar Memento para modelar el estado de la lista? Razone su respuesta.
 
 La utilización del patrón memento para modelar el estado de la lista y permitir una funcionalidad de "deshacer" puede tener sentido en función del tipo de "guardado" y restauración que se desee implementar. Por ejemplo:
 
@@ -118,6 +143,8 @@ Para el ejemplo que atañe a la práctica, se supondrá que se desea permitir vo
 Para la implementación de este patrón se opta por una clase privada dentro de la propia clase Cliente que tan sólo cuenta con un constructor privado. De esta forma se asegura que, incluso si el objeto memento se almacena en algún lugar fuera de un objeto Cliente, ningún otro objeto será capaz de usar el objeto o modificar su estado. Esto es consistente con el rol del patrón memento: producir un objeto que mantenga una instantánea de estado que no pueda ser modificado por otros objetos del sistema.
 
 ![Diagrama genérico memento](./memento_generic.png)
+
+\pagebreak
 
 ![Diagrama particular memento](./memento_practica.png)
 
@@ -130,6 +157,8 @@ Las clases implicadas en la demostración de este patrón residen en el paquete 
 - `Cliente.java`: contiene el memento con la lista de facturas asociadas a cada cliente, además de los métodos propios de la clase.
 
 El resultado de ejecutar la demo genera todos los objetos necesarios para asociar varias facturas a un cliente y muestra por consola las facturas asociadas al mismo en un momento dado (antes de deshacer) y en un momento posterior, una vez realizada la operación deshacer. Previamente a la realización de la operación deshacer, el estado de la lista de facturas se guarda en un memento.
+
+\pagebreak
 
 # Tarea Opcional
 
@@ -145,7 +174,16 @@ Se han incluido pruebas unitarias utilizando la biblioteca [JUnit](http://junit.
 
 ## GUI
 
-Se ha implementado parte de la GUI con Swing a modo de prueba de concepto, demostrando interacciones entre todas las capas del modelo MVC.
+Se ha implementado **parte** de la GUI con Swing a modo de prueba de concepto, demostrando interacciones entre todas las capas del modelo MVC.
+
+Si bien no se ha integrado todo el sistema TPV, sí se puede evaluar una demostración con la entidad `Producto`. Para ello, basta pinchar en el botón "Productos" para visualizar un listado y poder llevar a cabo las siguientes acciones:
+
+- Añadir nuevos productos.
+- Editar un producto en la propia tabla de visualización.
+- Borrar un producto seleccionado.
+- Exportar todo el listado de productos a un archivo CSV.
+
+\pagebreak
 
 # ANEXOS
 

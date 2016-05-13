@@ -25,6 +25,8 @@ import javax.swing.JTable;
 import javax.swing.JList;
 import org.jdesktop.beansbinding.BeanProperty;
 import java.util.List;
+
+import es.uned.mexposito37.daoo.controller.ProductoController;
 import es.uned.mexposito37.daoo.model.AbstractModelObjectInterface;
 import org.jdesktop.swingbinding.JListBinding;
 import org.jdesktop.swingbinding.SwingBindings;
@@ -42,6 +44,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class ApplicationWindow {
 
@@ -49,8 +53,16 @@ public class ApplicationWindow {
 	
 	List<Cliente> listaClientes = new ArrayList<Cliente>();
 	List<Factura> listaFacturas = new ArrayList<Factura>();
+	List<Producto> listaProductos = new ArrayList<Producto>();
 	
 	private JTable table;
+	private JTextField txtCdigo;
+	private JTextField txtDescripcin;
+	private JTextField txtPrecio;
+	private JTextField txtIva;
+	private JTextField txtPvp;
+	private JTextField txtStock;
+	JPanel bottomPanel = new JPanel();
 	 
 
 	/**
@@ -112,7 +124,9 @@ public class ApplicationWindow {
 				
 			}
 		});
-		btnClientes.setBounds(12, 45, 117, 25);
+		btnClientes.setBounds(12, 117, 117, 25);
+		
+		
 		leftPanel.add(btnClientes);
 		
 		JButton btnNewButton = new JButton("Facturas");
@@ -144,13 +158,7 @@ public class ApplicationWindow {
 		btnNewButton.setBounds(12, 81, 117, 25);
 		leftPanel.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Productos");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_1.setBounds(12, 117, 117, 25);
-		leftPanel.add(btnNewButton_1);
+		
 		
 		JPanel rightPanel = new JPanel();
 		rightPanel.setBounds(187, 0, 1155, 678);
@@ -177,11 +185,127 @@ public class ApplicationWindow {
 		table.setFillsViewportHeight(true);
 		scrollPane.setViewportView(table);
 		
-		JPanel bottomPanel = new JPanel();
+		
 		bottomPanel.setBounds(12, 220, 1131, 446);
 		rightPanel.add(bottomPanel);
 		bottomPanel.setLayout(null);
-		initDataBindings();
+		
+		
+		
+		JButton btnNewButton_1 = new JButton("Productos");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				initDataBindingsProducto();
+				JLabel lblNewLabel = new JLabel("Código");
+				lblNewLabel.setBounds(48, 40, 114, 19);
+				bottomPanel.add(lblNewLabel);
+				txtCdigo = new JTextField();
+				txtCdigo.setText("123457");
+				txtCdigo.setBounds(48, 60, 114, 19);
+				bottomPanel.add(txtCdigo);
+				txtCdigo.setColumns(10);
+				
+				
+				JLabel lblNewLabel2 = new JLabel("Descripción");
+				lblNewLabel2.setBounds(48, 91, 114, 19);
+				bottomPanel.add(lblNewLabel2);
+				txtDescripcin = new JTextField();
+				txtDescripcin.setText("Móvil Samsung S3");
+				txtDescripcin.setBounds(48, 111, 114, 19);
+				bottomPanel.add(txtDescripcin);
+				txtDescripcin.setColumns(10);
+				
+				
+				JLabel lblNewLabel3 = new JLabel("Precio");
+				lblNewLabel3.setBounds(48, 142, 114, 19);
+				bottomPanel.add(lblNewLabel3);
+				txtPrecio = new JTextField();
+				txtPrecio.setText("200");
+				txtPrecio.setBounds(48, 162, 114, 19);
+				bottomPanel.add(txtPrecio);
+				txtPrecio.setColumns(10);
+				
+				
+				JLabel lblNewLabel4 = new JLabel("IVA");
+				lblNewLabel4.setBounds(48, 193, 114, 19);
+				bottomPanel.add(lblNewLabel4);
+				txtIva = new JTextField();
+				txtIva.setText("21");
+				txtIva.setBounds(48, 213, 114, 19);
+				bottomPanel.add(txtIva);
+				txtIva.setColumns(10);
+				
+				JLabel lblNewLabel5 = new JLabel("Stock");
+				lblNewLabel5.setBounds(48, 244, 114, 19);
+				bottomPanel.add(lblNewLabel5);
+				txtStock = new JTextField();
+				txtStock.setText("10");
+				txtStock.setBounds(48, 264, 114, 19);
+				bottomPanel.add(txtStock);
+				txtStock.setColumns(10);
+				
+				JButton btnAadir = new JButton("Añadir");
+				btnAadir.setBounds(48, 304, 117, 25);
+				bottomPanel.add(btnAadir);
+				bottomPanel.repaint();
+				
+				JButton btnEliminar = new JButton("Eliminar");
+				btnEliminar.setBounds(208, 304, 117, 25);
+				bottomPanel.add(btnEliminar);
+				bottomPanel.repaint();
+				
+
+				JButton btnExportar = new JButton("Exportar");
+				btnExportar.setBounds(368, 304, 117, 25);
+				bottomPanel.add(btnExportar);
+				bottomPanel.repaint();
+				
+				initDataBindingsProducto();
+				btnAadir.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						initDataBindingsProducto();
+						Producto nuevoProducto = new MovilSamsung();
+						nuevoProducto.setCodigo(txtCdigo.getText());
+						nuevoProducto.setDescripcion(txtDescripcin.getText());
+						nuevoProducto.setPrecio(new BigDecimal(txtPrecio.getText()));
+						nuevoProducto.setIva(Integer.parseInt(txtIva.getText()));
+						nuevoProducto.setPvp();
+						nuevoProducto.setStock(Integer.parseInt(txtStock.getText()));
+						System.out.println(nuevoProducto.getDescripcion());
+						ProductoController productoController = new ProductoController();
+						//Producto nuevoProducto = new Producto("1234567891236", "Vernee Thor", new BigDecimal("85.48"), 21, new BigDecimal("103.43"), 5);
+						
+						productoController.add(nuevoProducto, listaProductos);
+						initDataBindingsProducto();
+					}
+				});
+				
+				btnEliminar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						 int rowIndex = table.getSelectedRow();
+						 listaProductos.remove(rowIndex);
+						 initDataBindingsProducto();
+					}
+				});
+				
+				btnExportar.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						try {
+							Producto.exportar(listaProductos);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				});
+			}
+		});
+		btnNewButton_1.setBounds(12, 45, 117, 25);
+		leftPanel.add(btnNewButton_1);
+		
+		
+		
 		
 	}
 	
@@ -214,10 +338,33 @@ public class ApplicationWindow {
 		listaClientes.add(clienteNoFidelizado);
 		listaFacturas.add(facturaClienteVip);
 		listaFacturas.add(facturaClienteNoFidelizado);
+		listaProductos.add(primerProducto);
+		listaProductos.add(segundoProducto);
+		listaProductos.add(tercerProducto);
 		
 	
 	}
-	protected void initDataBindings() {
-		
+	protected void initDataBindingsProducto() {
+		JTableBinding<Producto, List<Producto>, JTable> jTableBinding = SwingBindings.createJTableBinding(UpdateStrategy.READ, listaProductos, table);
+		//
+		BeanProperty<Producto, String> facturaBeanProperty = BeanProperty.create("codigo");
+		jTableBinding.addColumnBinding(facturaBeanProperty).setColumnName("Código Producto");
+		//
+		BeanProperty<Producto, String> facturaBeanProperty_1 = BeanProperty.create("descripcion");
+		jTableBinding.addColumnBinding(facturaBeanProperty_1).setColumnName("Descripción");
+		//
+		BeanProperty<Producto, String> facturaBeanProperty_2 = BeanProperty.create("precio");
+		jTableBinding.addColumnBinding(facturaBeanProperty_2).setColumnName("Precio");
+		//
+		BeanProperty<Producto, String> facturaBeanProperty_3 = BeanProperty.create("iva");
+		jTableBinding.addColumnBinding(facturaBeanProperty_3).setColumnName("IVA");
+		//
+		BeanProperty<Producto, String> facturaBeanProperty_4 = BeanProperty.create("pvp");
+		jTableBinding.addColumnBinding(facturaBeanProperty_4).setColumnName("PVP");
+		//
+		BeanProperty<Producto, String> facturaBeanProperty_5 = BeanProperty.create("stock");
+		jTableBinding.addColumnBinding(facturaBeanProperty_5).setColumnName("Stock");
+		//
+		jTableBinding.bind();
 	}
 }
